@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const { DATABASE_URL } = require('./config');
+const {User} = require('./models/user');
 
 function dbConnect(url = DATABASE_URL) {
   return mongoose.connect(url)
