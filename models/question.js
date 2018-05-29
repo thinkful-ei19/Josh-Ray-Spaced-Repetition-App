@@ -16,6 +16,6 @@ questionSchema.set('toObject', {
   }
 });
 
-const Question = mongoose.model('Question', questionSchema);
+// const Question = mongoose.model('Question', questionSchema);
 
-module.exports = { Question, questionSchema };
+module.exports = mongoose.model('Question', questionSchema);

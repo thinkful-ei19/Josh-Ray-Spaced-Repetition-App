@@ -4,9 +4,11 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 
-const { User } = require('../models/user');
+const User = require('../models/user');
 const config = require('../config');
 const router = express.Router();
+
+const Question = require('../models/question');
 
 const createAuthToken = function(user) {
   return jwt.sign({user}, config.JWT_SECRET, {
@@ -27,6 +29,7 @@ router.post('/login', localAuth, (req, res) => {
 // POST to register a new user
 router.post('/register', (req, res) => {
     let { username, password, firstname, lastname } = req.body;
+    let _hash;
     console.log(req.body);
     return User.find({username})
       .count()
@@ -44,11 +47,16 @@ router.post('/register', (req, res) => {
         return User.hashPassword(password); 
       })
       .then(hash => {
+         _hash = hash;
+         return Question.find();
+      })
+      .then(questions => {
         return User.create({
           username,
-          password: hash,
+          password: _hash,
           firstname,
-          lastname
+          lastname,
+          questions
         });
       })
       .then(user => {

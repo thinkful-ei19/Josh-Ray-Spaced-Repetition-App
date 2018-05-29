@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const router = express.Router();
 const bodyParser = require('body-parser');
 
-const { User } = require('../models/user');
+const User = require('../models/user');
 
 router.use(bodyParser.json());
 

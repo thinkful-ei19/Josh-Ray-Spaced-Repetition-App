@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     firstname: { type: String },
     lastname: { type: String },
-    questions: [{type: mongoose.Schema.Types.ObjectId, reference: 'Question'}]
+    questions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Question'}]
 });
 
 userSchema.set('toObject', {
@@ -28,6 +28,6 @@ userSchema.statics.hashPassword = function(password) {
     return bcrypt.hash(password, 10);
 };  
 
-const User = mongoose.model('User', userSchema);
+// const User = mongoose.model('User', userSchema);
 
-module.exports = {User};
+module.exports = mongoose.model('User', userSchema);
