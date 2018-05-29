@@ -1,12 +1,14 @@
 'use strict';
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const {questionSchema} = require('./question');
 
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true },
     password: { type: String, required: true },
     firstname: { type: String },
-    lastname: { type: String }
+    lastname: { type: String },
+    questions: [questionSchema]
 });
 
 userSchema.methods.validatePassword = function(password) {
