@@ -3,9 +3,9 @@
 const Queue = require('./queue-class');
 const { User } = require('../models/user');
 
-const User = new Queue();
+const UserQueue = new Queue();
 
-User.questions.map(question = User.enqueue(question));
+User.questions.question.map(question = UserQueue.enqueue(question));
 
 function peek(queue) {
   let currNode = queue.first;
@@ -13,4 +13,4 @@ function peek(queue) {
   return displayQueue;
 };
 
-module.exports = {User, peek};
+module.exports = {UserQueue, peek};
