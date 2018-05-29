@@ -73,6 +73,12 @@ router.post('/register', (req, res) => {
       });
 });
 
+
 const jwtAuth = passport.authenticate('jwt', {session: false});
+
+router.post('/refresh', jwtAuth, (req, res) => {
+  const authToken = createAuthToken(req.user);
+  res.json({ authToken, userId: req.user._id });
+});
 
 module.exports = {router};
