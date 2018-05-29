@@ -10,10 +10,13 @@ router.use(bodyParser.json());
 
 
 // GET USER QUESTIONS
-router.get('/:userId', (req, res, next) => {
-  User.findById(req.params.userId)
+router.get('/questions', (req, res, next) => {
+  // console.log(req);
+  User.findById(req.user.id)
     .then(user => {
       res.json(user.questions);
     })
 });
 
+
+module.exports = router;

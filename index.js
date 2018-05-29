@@ -11,7 +11,7 @@ const { PORT, CLIENT_ORIGIN } = require('./config');
 const { dbConnect } = require('./db-mongoose');
 // const {dbConnect} = require('./db-knex');
 
-const questionRouter = require('./routes/questionRouter');
+const userRouter = require('./routes/userRouter');
 
 const app = express();
 
@@ -34,7 +34,7 @@ app.use('/auth', authRouter);
 
 app.use(passport.authenticate('jwt', {session: false, failWithError: true}));
 
-app.use('/api', questionRouter);
+app.use('/api', userRouter);
 
 function runServer(port = PORT) {
   const server = app
