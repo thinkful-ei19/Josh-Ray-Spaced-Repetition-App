@@ -5,6 +5,7 @@ const questionSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   question: { type: String, required: true },
   answer: { type: String, required: true }, 
+  correct: { type: Number, required: true } 
 });
 
 questionSchema.set('toObject', {

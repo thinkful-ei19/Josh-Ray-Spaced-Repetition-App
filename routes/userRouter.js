@@ -31,8 +31,9 @@ router.get('/questions', (req, res, next) => {
     .populate('questions')
     .then(user => {
       // console.log(user.questions);
-      user.questions.map(question => questionQueue.enqueue(question));
-      // console.log(questionQueue.last);
+      user.questions.forEach(question => questionQueue.enqueue(question));
+      // console.log(questionQueue);
+      // res.json(user.questions);
       res.json(peek(questionQueue));
     })
 });
@@ -40,18 +41,40 @@ router.get('/questions', (req, res, next) => {
 
 // ON CORRECT OR INCORRECT ANSWER, WILL EITHER REMOVE QUESTION FROM QUEUE OR PUT IN THE BACK OF QUEUE
 router.put('/questions', (req, res, next) => {
-  // console.log(display(questionQueue));
+  // console.log(req.body.value);
+  // console.log(questionQueue.first.value.answer);
   const userId = req.user.id;
+  const submitAnswer = req.body.value.toLowerCase();
+  const correctAnswer = questionQueue.first.value.answer.toLowerCase();
 
-  if(req.body.correct) {
+  // IF CORRECT ANSWER
+  if(submitAnswer === correctAnswer) {
     questionQueue.dequeue();
+    res.json(peek(questionQueue));
+    // console.log(display(questionQueue));
   }
+
+  
+  // IF INCORRECT ANSWER
+  
+  // console.log(questionQueue);
   let updatedQuestions = [];
-  while(questionQueue.first) {
-    updatedQuestions.push(questionQueue.value);
+  if(submitAnswer !== correctAnswer) {
+    let currNode = questionQueue.first.value;
+    console.log(currNode);
+    questionQueue.enqueue(currNode);
+
+    // console.log(questionQueue);
+
+    while(questionQueue.first.prev !== null) {
+      currNode = currNode.prev;
+    }
+    return questionQueue;
   }
+  // console.log(questionQueue);
   // console.log(req.user.id);
   User.findByIdAndUpdate(userId, {$set: {questions: updatedQuestions}})
+    .then
   res.json(peek(questionQueue));
 });
 

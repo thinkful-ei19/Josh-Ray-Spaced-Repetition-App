@@ -8,7 +8,7 @@ class _Node {
 }
 
 class Queue {
-  constructor(value) {
+  constructor() {
     this.first = null;
     this.last = null;
   }
@@ -63,6 +63,14 @@ function display(queue) {
   let currNode = queue.first;
   while(currNode) {
     console.log(currNode.value);
+    currNode = currNode.prev;
+  }
+}
+
+// ENQUEUE WITHOUT ADDING NEW ITEM TO QUEUE
+function moveQueue(queue) {
+  let currNode = queue.first;
+  while(currNode.last !== null) {
     currNode = currNode.prev;
   }
 }
