@@ -5,7 +5,6 @@ const questionSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   question: { type: String, required: true },
   answer: { type: String, required: true }, 
-  // memoryValue: { type: Number, default: 1 } 
 });
 
 questionSchema.set('toObject', {
@@ -16,6 +15,5 @@ questionSchema.set('toObject', {
   }
 });
 
-// const Question = mongoose.model('Question', questionSchema);
 
 module.exports = mongoose.model('Question', questionSchema);

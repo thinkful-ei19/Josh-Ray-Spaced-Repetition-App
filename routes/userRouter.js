@@ -32,7 +32,7 @@ router.get('/questions', (req, res, next) => {
     .then(user => {
       // console.log(user.questions);
       user.questions.map(question => questionQueue.enqueue(question));
-      // console.log(questionQueue);
+      // console.log(questionQueue.last);
       res.json(peek(questionQueue));
     })
 });
@@ -41,6 +41,8 @@ router.get('/questions', (req, res, next) => {
 // ON CORRECT OR INCORRECT ANSWER, WILL EITHER REMOVE QUESTION FROM QUEUE OR PUT IN THE BACK OF QUEUE
 router.put('/questions', (req, res, next) => {
   // console.log(display(questionQueue));
+  const userId = req.user.id;
+
   if(req.body.correct) {
     questionQueue.dequeue();
   }
@@ -48,7 +50,8 @@ router.put('/questions', (req, res, next) => {
   while(questionQueue.first) {
     updatedQuestions.push(questionQueue.value);
   }
-  User.findByIdAndUpdate(user.id, {$set: {questions: userQuestions}})
+  // console.log(req.user.id);
+  User.findByIdAndUpdate(userId, {$set: {questions: userQuestions}})
   res.json(peek(questionQueue));
 });
 
