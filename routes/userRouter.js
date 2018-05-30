@@ -51,7 +51,7 @@ router.put('/questions', (req, res, next) => {
     updatedQuestions.push(questionQueue.value);
   }
   // console.log(req.user.id);
-  User.findByIdAndUpdate(userId, {$set: {questions: userQuestions}})
+  User.findByIdAndUpdate(userId, {$set: {questions: updatedQuestions}})
   res.json(peek(questionQueue));
 });
 
