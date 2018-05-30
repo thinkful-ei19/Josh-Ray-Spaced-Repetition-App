@@ -24,7 +24,6 @@ const questionQueue = new Queue();
 
 
 
-
 // GET FIRST QUESTION IN QUEUE
 router.get('/questions', (req, res, next) => {
   // console.log(req.user);
@@ -39,9 +38,18 @@ router.get('/questions', (req, res, next) => {
 });
 
 
-// router.put('/questions', (req, res, next) => {
-//   User.findById(req.user.id)
-    
-// });
+// ON CORRECT OR INCORRECT ANSWER, WILL EITHER REMOVE QUESTION FROM QUEUE OR PUT IN THE BACK OF QUEUE
+router.put('/questions', (req, res, next) => {
+  // console.log(display(questionQueue));
+  if(req.body.correct) {
+    questionQueue.dequeue();
+  }
+  let updatedQuestions = [];
+  while(questionQueue.first) {
+    updatedQuestions.push(questionQueue.value);
+  }
+  User.findByIdAndUpdate(user.id, {$set: {questions: userQuestions}})
+  res.json(peek(questionQueue));
+});
 
 module.exports = router;
