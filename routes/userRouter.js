@@ -60,21 +60,25 @@ router.put('/questions', (req, res, next) => {
   // console.log(questionQueue);
   let updatedQuestions = [];
   if(submitAnswer !== correctAnswer) {
-    let currNode = questionQueue.first.value;
-    console.log(currNode);
-    questionQueue.enqueue(currNode);
+    let currNode = questionQueue.first;
+    // console.log(currNode);
+    questionQueue.enqueue(currNode.value);
 
     // console.log(questionQueue);
-
-    while(questionQueue.first.prev !== null) {
-      currNode = currNode.prev;
-    }
+    
+    currNode = currNode.prev;
+    questionQueue.dequeue();
+    
+    console.log(display(questionQueue));
+    // while(questionQueue.first.prev !== null) {
+    //   currNode = currNode.prev;
+    // }
+    // console.log(questionQueue);
     return questionQueue;
   }
   // console.log(questionQueue);
   // console.log(req.user.id);
   User.findByIdAndUpdate(userId, {$set: {questions: updatedQuestions}})
-    .then
   res.json(peek(questionQueue));
 });
 
