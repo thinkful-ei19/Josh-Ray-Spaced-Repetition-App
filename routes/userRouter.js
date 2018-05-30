@@ -5,7 +5,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 
 const User = require('../models/user');
-const Queue = require('../queue/queue-class');
+const { Queue, peek, display } = require('../queue/queue-class');
 
 router.use(bodyParser.json());
 
@@ -22,11 +22,7 @@ const questionQueue = new Queue();
 //     })
 // });
 
-function peek(queue) {
-  let currNode = queue.first;
-  let displayQueue = currNode.value;
-  return displayQueue;
-};
+
 
 
 // GET FIRST QUESTION IN QUEUE

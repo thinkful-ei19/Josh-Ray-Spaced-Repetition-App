@@ -47,4 +47,24 @@ class Queue {
   }
 }
 
-module.exports = Queue;
+// SEE FIRST NODE IN QUEUE
+function peek(queue) {
+  let currNode = queue.first;
+  let displayQueue = currNode.value;
+  return displayQueue;
+};
+
+
+// SEE WHOLE QUEUE
+function display(queue) {
+  if(queue.first === null) {
+    return null;
+  }
+  let currNode = queue.first;
+  while(currNode) {
+    console.log(currNode.value);
+    currNode = currNode.prev;
+  }
+}
+
+module.exports = { Queue, peek, display };
