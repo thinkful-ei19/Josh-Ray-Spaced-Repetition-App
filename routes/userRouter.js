@@ -67,7 +67,7 @@ router.put('/questions', (req, res, next) => {
         })
       })
   }
- //
+
   // IF INCORRECT ANSWER
   // * move current question to back of the queue and move 2nd question in queue into the 1st position
   if(submitAnswer !== correctAnswer) {
