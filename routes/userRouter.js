@@ -53,11 +53,16 @@ router.put('/questions', (req, res, next) => {
       .then(user => {
         user.questions.push(user.questions[0])
         user.questions.shift()
+        user.correct++
         user.save(err => {
           if(err) {
             res.send(err);
           }
-          res.json(peek(questionQueue));
+          let responseObj = peek(questionQueue);
+          responseObj = responseObj.toObject();
+          responseObj.correct = user.correct;
+          res.json(responseObj);
+          // res.json(peek(questionQueue));
         })
       })
   }
@@ -74,11 +79,19 @@ router.put('/questions', (req, res, next) => {
     .then(user => {
       user.questions.push(user.questions[0])
       user.questions.shift()
+      user.incorrect++
       user.save(err => {
         if(err) {
           res.send(err);
         }
-        res.json(peek(questionQueue));
+        // console.log(user);
+        let responseObj = peek(questionQueue);
+        responseObj = responseObj.toObject();
+        responseObj.incorrect = user.incorrect;
+        res.json(responseObj);
+          // responseObj.incorrect = false;
+          // console.log(responseObj);
+        // res.json(peek(questionQueue));
       })
     })
   }

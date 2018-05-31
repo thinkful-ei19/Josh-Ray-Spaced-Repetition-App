@@ -8,6 +8,8 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     firstname: { type: String },
     lastname: { type: String },
+    correct: { type: Number, required: true, default: 0 },
+    incorrect: { type: Number, required: true, default: 0 },
     questions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Question'}]
     // questions: [{
     //     userId: mongoose.Schema.Types.ObjectId,
