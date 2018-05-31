@@ -15,7 +15,8 @@ const userSchema = new mongoose.Schema({
     //     answer: String,
     //     correct: Number
     // }]
-
+    // NEED TO CHANGE MODEL
+    // questions: { Type: object } 
 });
 
 userSchema.set('toObject', {

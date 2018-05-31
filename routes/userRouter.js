@@ -43,12 +43,11 @@ router.put('/questions', (req, res, next) => {
 
   // IF CORRECT ANSWER
   // * remove question from queue
-  if(submitAnswer === correctAnswer) {
+  if(submitAnswer === correctAnswer) {    // * NOTE: Need to refactor together with User schema to eliminate double manipulation for Queue and User question Array
     questionQueue.dequeue();
 
     User.findByIdAndUpdate(userId) 
       .then(user => {
-        // console.log(user);
         user.questions.shift()
         user.save(err => {
           if(err) {
