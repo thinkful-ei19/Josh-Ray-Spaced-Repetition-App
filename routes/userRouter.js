@@ -51,10 +51,12 @@ router.put('/questions', (req, res, next) => {
   // * remove question from queue
   if(submitAnswer === correctAnswer) {
     questionQueue.dequeue();
-    console.log(display(questionQueue));
+    // console.log(display(questionQueue));
 
-    User.findById(userId) 
+    User.findByIdAndUpdate(userId) 
       .then(user => {
+        // console.log(user);
+        user.questions.shift()
         user.save(err => {
           if(err) {
             res.send(err);
@@ -88,11 +90,11 @@ router.put('/questions', (req, res, next) => {
     //   currNode = currNode.prev;
     // }
     // console.log(questionQueue);
-
-    User.findById(userId)
+    
+    User.findByIdAndUpdate(userId)
     .then(user => {
-      // console.log(user);
-      console.log(display(questionQueue));
+      user.questions.push(user.questions[0])
+      user.questions.shift()
       user.save(err => {
         if(err) {
           res.send(err);
