@@ -48,14 +48,28 @@ router.put('/questions', (req, res, next) => {
   const correctAnswer = questionQueue.first.value.answer.toLowerCase();
 
   // IF CORRECT ANSWER
+  // * remove question from queue
   if(submitAnswer === correctAnswer) {
     questionQueue.dequeue();
-    res.json(peek(questionQueue));
+    console.log(display(questionQueue));
+
+    User.findById(userId) 
+      .then(user => {
+        user.save(err => {
+          if(err) {
+            res.send(err);
+          }
+          res.json(peek(questionQueue));
+        })
+      })
+    
+    // res.json(peek(questionQueue));
     // console.log(display(questionQueue));
   }
-
+ 
   
   // IF INCORRECT ANSWER
+  // * move current question to back of the queue and move 2nd question in queue into the 1st position
   
   // console.log(questionQueue);
   let updatedQuestions = [];
@@ -69,17 +83,31 @@ router.put('/questions', (req, res, next) => {
     currNode = currNode.prev;
     questionQueue.dequeue();
     
-    console.log(display(questionQueue));
+    // console.log(display(questionQueue));
     // while(questionQueue.first.prev !== null) {
     //   currNode = currNode.prev;
     // }
     // console.log(questionQueue);
-    return questionQueue;
+
+    User.findById(userId)
+    .then(user => {
+      // console.log(user);
+      console.log(display(questionQueue));
+      user.save(err => {
+        if(err) {
+          res.send(err);
+        }
+        res.json(peek(questionQueue));
+      })
+    })
   }
   // console.log(questionQueue);
   // console.log(req.user.id);
-  User.findByIdAndUpdate(userId, {$set: {questions: updatedQuestions}})
-  res.json(peek(questionQueue));
+
+  // User.findByIdAndUpdate(userId, {$set: {questions: updatedQuestions}})
+  // res.json(peek(questionQueue));
+  
+
 });
 
 module.exports = router;
