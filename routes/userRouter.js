@@ -26,6 +26,7 @@ const questionQueue = new Queue();
 
 // GET FIRST QUESTION IN QUEUE
 router.get('/questions', (req, res, next) => {
+  // const questionQueue = new Queue();
   User.findById(req.user.id)
     .populate('questions')
     .then(user => {
@@ -44,12 +45,12 @@ router.put('/questions', (req, res, next) => {
   // IF CORRECT ANSWER
   // * remove question from queue
   if(submitAnswer === correctAnswer) {    // * NOTE: Need to refactor together with User schema to eliminate double manipulation for Queue and User question Array
-    let currNode = questionQueue.first;
-    questionQueue.enqueue(currNode.value);
-    currNode = currNode.prev;
-    questionQueue.dequeue();
-
     User.findByIdAndUpdate(userId) 
+      let currNode = questionQueue.first;
+      questionQueue.enqueue(currNode.value);
+      currNode = currNode.prev;
+      questionQueue.dequeue()
+
       .then(user => {
         user.questions.push(user.questions[0])
         user.questions.shift()
@@ -60,10 +61,8 @@ router.put('/questions', (req, res, next) => {
           }
           let responseObj = peek(questionQueue);
           responseObj = responseObj.toObject();
-          console.log(responseObj);
           responseObj.correct = user.correct;
           res.json(responseObj);
-          // res.json(peek(questionQueue));
         })
       })
   }
@@ -85,14 +84,10 @@ router.put('/questions', (req, res, next) => {
         if(err) {
           res.send(err);
         }
-        // console.log(user);
         let responseObj = peek(questionQueue);
         responseObj = responseObj.toObject();
         responseObj.incorrect = user.incorrect;
         res.json(responseObj);
-          // responseObj.incorrect = false;
-          // console.log(responseObj);
-        // res.json(peek(questionQueue));
       })
     })
   }
