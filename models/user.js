@@ -10,12 +10,12 @@ const userSchema = new mongoose.Schema({
     lastname: { type: String },
     correct: { type: Number, required: true, default: 0 },
     incorrect: { type: Number, required: true, default: 0 },
-    // questions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Question'}]
-    questions: {
-        Type: Object,
-        question: String,
-        answer: String
-    }
+    questions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Question'}]
+    // questions: {
+    //     Type: Object,
+    //     question: String,
+    //     answer: String
+    // }
     // questions: {Type: object}
     // NEED TO CHANGE MODEL
     // questions: { Type: object } 
