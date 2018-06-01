@@ -26,11 +26,10 @@ const questionQueue = new Queue();
 
 // GET FIRST QUESTION IN QUEUE
 router.get('/questions', (req, res, next) => {
-  // const questionQueue = new Queue();
   User.findById(req.user.id)
     .populate('questions')
     .then(user => {
-      user.questions.forEach(question => questionQueue.enqueue(question));
+      user.questions.map(question => questionQueue.enqueue(question));
       res.json(peek(questionQueue));
     })
 });
