@@ -30,7 +30,6 @@ router.post('/login', localAuth, (req, res) => {
 router.post('/register', (req, res) => {
     let { username, password, firstname, lastname } = req.body;
     let _hash;
-    console.log(req.body);
     return User.find({username})
       .count()
       .then(count => {
